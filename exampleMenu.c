@@ -16,6 +16,9 @@ void activate(GtkApplication *app, gpointer app_data)
     gtk_window_set_title(GTK_WINDOW(window), "Enter Your name");
     gtk_window_set_resizable(GTK_WINDOW(window), false);
     // gtk box
+
+    // TODO add box for label and grid
+
     // label
     label = gtk_label_new("Enter your name");
 
