@@ -81,7 +81,7 @@ int firstDegree(GtkWidget *widget, gpointer data)
     button = gtk_button_new_with_label("Enter");
     g_signal_connect_swapped(button, "clicked", G_CALLBACK(handleValue), c);
     gtk_grid_attach_next_to(GTK_GRID(grid), button, entry, GTK_POS_RIGHT, 1, 2);
-
+    // hi
     // if (a != 0)
     // {
     //     double x = (double)b / a;
