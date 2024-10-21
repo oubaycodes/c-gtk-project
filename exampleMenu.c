@@ -1,5 +1,7 @@
 #include "gtk/gtk.h"
-static int returnValue;
+
+static int returnValue[3];
+static int currentValueIndex = 0;
 void handleValue(GtkWidget *widget, GtkWidget *data)
 {
     GtkEntryBuffer *valueBuffer = gtk_entry_get_buffer(GTK_ENTRY(widget));
@@ -11,12 +13,17 @@ void handleValue(GtkWidget *widget, GtkWidget *data)
         return;
 
     gtk_entry_buffer_delete_text(valueBuffer, 0, bufferLength);
-    returnValue = atoi(entryText);
-    printf("%i\n", returnValue);
-    // printf("%s\n", entryText);
+    gtk_widget_set_sensitive(widget, FALSE);
+    gtk_widget_set_sensitive(data, FALSE);
+
+    returnValue[currentValueIndex] = atoi(entryText);
+    currentValueIndex++;
 }
+
 int firstDegree(GtkWidget *widget, gpointer data)
 {
+    g_signal_handlers_disconnect_by_data(widget, data);
+    gtk_widget_set_sensitive(widget, FALSE);
     GtkWidget *entry;
     GtkWidget *button;
     GtkWidget *grid;
@@ -44,7 +51,7 @@ int firstDegree(GtkWidget *widget, gpointer data)
     // button
     button = gtk_button_new_with_label("Enter");
     g_signal_connect_swapped(button, "clicked", G_CALLBACK(handleValue), entry);
-    a = returnValue;
+
     gtk_grid_attach_next_to(GTK_GRID(grid), button, entry, GTK_POS_RIGHT, 1, 2);
     //////////////////////////////////b//////////////////////////////
     // label
