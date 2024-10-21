@@ -1,4 +1,5 @@
 {
   "C_Cpp.errorSquiggles": "disabled",
-  "cSpell.words": ["gpointer"]
+  "cSpell.words": ["gpointer"],
+  "code-runner.customCommand": "gcc $(pkg-config --cflags gtk4) -o exampleMenu-gtk exampleMenu.c $(pkg-config --libs gtk4)"
 }

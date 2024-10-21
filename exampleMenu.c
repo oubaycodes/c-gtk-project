@@ -1,13 +1,16 @@
 #include "gtk/gtk.h"
-
 void handleValue(GtkWidget *widget, gpointer data)
 {
     GtkEntryBuffer *valueBuffer = gtk_entry_get_buffer(GTK_ENTRY(widget));
     int bufferLength = gtk_entry_buffer_get_length(valueBuffer);
-    char *entryText = gtk_entry_buffer_get_text(valueBuffer);
-    printf("%s\n", entryText);
+    char *entryTextPointer = (char *)gtk_entry_buffer_get_text(valueBuffer);
+    char entryText[100];
+    strncpy(entryText, entryTextPointer, 100);
+    if (entryText[0] == '\0')
+        return;
 
     gtk_entry_buffer_delete_text(valueBuffer, 0, bufferLength);
+    printf("%s\n", entryText);
 }
 void activate(GtkApplication *app, gpointer app_data)
 {
@@ -21,6 +24,7 @@ void activate(GtkApplication *app, gpointer app_data)
     // styling
     int xBoxMargins = 40;
     int yBoxMargins = 30;
+    int buttonGridGap = 20;
     int entryGridGap = 10;
     // window
     window = gtk_application_window_new(app);
@@ -41,6 +45,9 @@ void activate(GtkApplication *app, gpointer app_data)
     gtk_label_set_xalign(GTK_LABEL(label), 0);
     gtk_box_append(GTK_BOX(box), label);
 
+    // button grid
+    grid = gtk_grid_new();
+
     // grid
     grid = gtk_grid_new();
     gtk_grid_set_column_spacing(GTK_GRID(grid), entryGridGap);
@@ -50,11 +57,15 @@ void activate(GtkApplication *app, gpointer app_data)
     entry = gtk_entry_new();
     GtkEntryBuffer *buffer = gtk_entry_buffer_new("", 0);
     entry = gtk_entry_new_with_buffer(buffer);
-    gtk_grid_attach(GTK_GRID(grid), entry, 1, 0, 1, 1);
+    gtk_entry_set_max_length(GTK_ENTRY(entry), 60);
+
+    gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 1, 1);
+
     // button
     button = gtk_button_new_with_label("Enter");
     g_signal_connect_swapped(button, "clicked", G_CALLBACK(handleValue), entry);
     gtk_grid_attach_next_to(GTK_GRID(grid), button, entry, GTK_POS_RIGHT, 1, 2);
+    // display
     gtk_window_present(GTK_WINDOW(window));
 }
 int main(int argc, char **argv)
