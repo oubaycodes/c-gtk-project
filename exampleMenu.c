@@ -1,5 +1,6 @@
 #include "gtk/gtk.h"
-void handleValue(GtkWidget *widget, int data)
+static int returnValue;
+void handleValue(GtkWidget *widget, GtkWidget *data)
 {
     GtkEntryBuffer *valueBuffer = gtk_entry_get_buffer(GTK_ENTRY(widget));
     int bufferLength = gtk_entry_buffer_get_length(valueBuffer);
@@ -10,7 +11,8 @@ void handleValue(GtkWidget *widget, int data)
         return;
 
     gtk_entry_buffer_delete_text(valueBuffer, 0, bufferLength);
-    data = (entryText);
+    returnValue = atoi(entryText);
+    printf("%i\n", returnValue);
     // printf("%s\n", entryText);
 }
 int firstDegree(GtkWidget *widget, gpointer data)
@@ -20,7 +22,7 @@ int firstDegree(GtkWidget *widget, gpointer data)
     GtkWidget *grid;
     GtkWidget *label;
     GtkWidget *box = data;
-    int *a, *b, *c;
+    int a, b, c;
     // spacing
     int buttonGridGap = 20;
     int entryGridGap = 10;
@@ -41,7 +43,8 @@ int firstDegree(GtkWidget *widget, gpointer data)
     gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 1, 1);
     // button
     button = gtk_button_new_with_label("Enter");
-    g_signal_connect_swapped(button, "clicked", G_CALLBACK(handleValue), a);
+    g_signal_connect_swapped(button, "clicked", G_CALLBACK(handleValue), entry);
+    a = returnValue;
     gtk_grid_attach_next_to(GTK_GRID(grid), button, entry, GTK_POS_RIGHT, 1, 2);
     //////////////////////////////////b//////////////////////////////
     // label
@@ -60,7 +63,7 @@ int firstDegree(GtkWidget *widget, gpointer data)
     gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 1, 1);
     // button
     button = gtk_button_new_with_label("Enter");
-    g_signal_connect_swapped(button, "clicked", G_CALLBACK(handleValue), b);
+    g_signal_connect_swapped(button, "clicked", G_CALLBACK(handleValue), entry);
     gtk_grid_attach_next_to(GTK_GRID(grid), button, entry, GTK_POS_RIGHT, 1, 2);
     /////////////////////////////////////////////////////////////////
     // label
@@ -79,9 +82,9 @@ int firstDegree(GtkWidget *widget, gpointer data)
     gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 1, 1);
     // button
     button = gtk_button_new_with_label("Enter");
-    g_signal_connect_swapped(button, "clicked", G_CALLBACK(handleValue), c);
+    g_signal_connect_swapped(button, "clicked", G_CALLBACK(handleValue), entry);
     gtk_grid_attach_next_to(GTK_GRID(grid), button, entry, GTK_POS_RIGHT, 1, 2);
-    // hi
+
     // if (a != 0)
     // {
     //     double x = (double)b / a;
