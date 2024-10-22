@@ -1,6 +1,6 @@
 #include "gtk/gtk.h"
 
-static int returnValue[3];
+static int returnValue[2];
 static int currentValueIndex = 0;
 void handleValue(GtkWidget *widget, GtkWidget *data)
 {
@@ -18,9 +18,18 @@ void handleValue(GtkWidget *widget, GtkWidget *data)
 
     returnValue[currentValueIndex] = atoi(entryText);
     currentValueIndex++;
+    if (currentValueIndex == 2)
+    {
+        //
+    }
 }
-
-int firstDegree(GtkWidget *widget, gpointer data)
+void firstDegreeLogic(GtkWidget *widget, gpointer data)
+{
+    int a = returnValue[0];
+    int b = returnValue[1];
+    printf("%i\n%i\n", a, b);
+}
+int firstDegreeWidgets(GtkWidget *widget, gpointer data)
 {
     g_signal_handlers_disconnect_by_data(widget, data);
     gtk_widget_set_sensitive(widget, FALSE);
@@ -43,7 +52,6 @@ int firstDegree(GtkWidget *widget, gpointer data)
     gtk_grid_set_column_spacing(GTK_GRID(grid), entryGridGap);
     gtk_box_append(GTK_BOX(box), grid);
     // entry
-    entry = gtk_entry_new();
     GtkEntryBuffer *buffer = gtk_entry_buffer_new("", 0);
     entry = gtk_entry_new_with_buffer(buffer);
     gtk_entry_set_max_length(GTK_ENTRY(entry), 60);
@@ -63,7 +71,6 @@ int firstDegree(GtkWidget *widget, gpointer data)
     gtk_grid_set_column_spacing(GTK_GRID(grid), entryGridGap);
     gtk_box_append(GTK_BOX(box), grid);
     // entry
-    entry = gtk_entry_new();
     buffer = gtk_entry_buffer_new("", 0);
     entry = gtk_entry_new_with_buffer(buffer);
     gtk_entry_set_max_length(GTK_ENTRY(entry), 60);
@@ -74,23 +81,27 @@ int firstDegree(GtkWidget *widget, gpointer data)
     gtk_grid_attach_next_to(GTK_GRID(grid), button, entry, GTK_POS_RIGHT, 1, 2);
     /////////////////////////////////////////////////////////////////
     // label
-    label = gtk_label_new("enter a value for c:");
-    gtk_label_set_xalign(GTK_LABEL(label), 0);
-    gtk_box_append(GTK_BOX(box), label);
-    // grid
-    grid = gtk_grid_new();
-    gtk_grid_set_column_spacing(GTK_GRID(grid), entryGridGap);
-    gtk_box_append(GTK_BOX(box), grid);
-    // entry
-    entry = gtk_entry_new();
-    buffer = gtk_entry_buffer_new("", 0);
-    entry = gtk_entry_new_with_buffer(buffer);
-    gtk_entry_set_max_length(GTK_ENTRY(entry), 60);
-    gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 1, 1);
-    // button
+    // label = gtk_label_new("enter a value for c:");
+    // gtk_label_set_xalign(GTK_LABEL(label), 0);
+    // gtk_box_append(GTK_BOX(box), label);
+    // // grid
+    // grid = gtk_grid_new();
+    // gtk_grid_set_column_spacing(GTK_GRID(grid), entryGridGap);
+    // gtk_box_append(GTK_BOX(box), grid);
+    // // entry
+    // buffer = gtk_entry_buffer_new("", 0);
+    // entry = gtk_entry_new_with_buffer(buffer);
+    // gtk_entry_set_max_length(GTK_ENTRY(entry), 60);
+    // gtk_grid_attach(GTK_GRID(grid), entry, 1, 1, 1, 1);
+    // // button
+    // button = gtk_button_new_with_label("Enter");
+    // g_signal_connect_swapped(button, "clicked", G_CALLBACK(handleValue), entry);
+    // gtk_grid_attach_next_to(GTK_GRID(grid), button, entry, GTK_POS_RIGHT, 1, 2);
+    // ///////////////////enter button//////////////////
     button = gtk_button_new_with_label("Enter");
-    g_signal_connect_swapped(button, "clicked", G_CALLBACK(handleValue), entry);
-    gtk_grid_attach_next_to(GTK_GRID(grid), button, entry, GTK_POS_RIGHT, 1, 2);
+    g_signal_connect(button, "clicked", G_CALLBACK(firstDegreeLogic), NULL);
+    gtk_widget_set_sensitive(button, FALSE);
+    gtk_box_append(GTK_BOX(box), button);
 
     // if (a != 0)
     // {
@@ -146,7 +157,7 @@ void activate(GtkApplication *app, gpointer app_data)
     gtk_box_append(GTK_BOX(box), grid);
 
     button = gtk_button_new_with_label("ax+b=0");
-    g_signal_connect(button, "clicked", G_CALLBACK(firstDegree), box);
+    g_signal_connect(button, "clicked", G_CALLBACK(firstDegreeWidgets), box);
     gtk_grid_attach(GTK_GRID(grid), button, 0, 0, 1, 1);
     button = gtk_button_new_with_label("ax^2+bx+c=0");
     gtk_grid_attach(GTK_GRID(grid), button, 1, 0, 1, 1);
