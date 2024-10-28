@@ -6,9 +6,8 @@ static int passedVarIndex = 0;
 // global
 void handleValue(GtkWidget *widget, GtkWidget *data)
 {
-    // TODO Create global widget variables
-    // TODO Refactor code to enable global variable flow
-    GtkEntryBuffer *valueBuffer = gtk_entry_get_buffer(GTK_ENTRY(widget));
+    gtk_builder_add_objects_from_file()
+        GtkEntryBuffer *valueBuffer = gtk_entry_get_buffer(GTK_ENTRY(widget));
     int bufferLength = gtk_entry_buffer_get_length(valueBuffer);
     char *entryTextPointer = (char *)gtk_entry_buffer_get_text(valueBuffer);
     char entryText[100];

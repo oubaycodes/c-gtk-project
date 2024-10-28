@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object id="window" class="GtkWindow">
+    <property name="title">Grid</property>
+    <property name="visible">True</property>
+    <child>
+      <object id="box" class="GtkBox">
+        <property name="orientation">vertical</property>
+        <property name="valign">3</property>
+        <property name="halign">3</property>
+
+        <child>
+          <object id="label 1" class="GtkLabel">
+            <property name="label">clicky click bitch</property>
+            <property name="xalign">0</property>
+
+          </object>
+        </child>
+        <child>
+          <object id="grid 1" class="GtkGrid">
+            <property name="column-spacing">20</property>
+            <child>
+              <object id="button 1" class="GtkButton">
+                <property name="label">button 1</property>
+                <layout>
+                  <property name="column">0</property>
+                  <property name="row">0</property>
+                </layout>
+              </object>
+            </child>
+            <child>
+              <object id="entry 1" class="GtkEntry">
+                <property name="placeholder-text">Enter some shit</property>
+                <layout>
+                  <property name="column">1</property>
+                  <property name="row">0</property>
+                  <property name="row-span">2</property>
+                </layout>
+              </object>
+            </child>
+          </object>
+
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>
